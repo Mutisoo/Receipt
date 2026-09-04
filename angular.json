@@ -17,16 +17,21 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+              "browser": "src/main.ts",
+              "server": "src/main.server.ts",
+              "outputMode": "server",
+              "ssr": {
+                "entry": "src/server.ts"
+              },
+              "tsConfig": "tsconfig.app.json",
+              "assets": [
+                "src/favicon.ico",
+                "src/assets"
+              ],
               "styles": [
-              "src/styles.css"
-            ]
-          },
+                "src/styles.css"
+              ]
+            },
           "configurations": {
             "production": {
               "budgets": [
