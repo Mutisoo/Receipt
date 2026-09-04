@@ -9,7 +9,15 @@ import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
-const angularApp = new AngularNodeAppEngine({ trustProxyHeaders: true });
+
+// 1. Tell Express to trust reverse proxy headers sent by Pxxl
+app.set('trust proxy', true);
+
+// 2. Add allowedHosts alongside trustProxyHeaders
+const angularApp = new AngularNodeAppEngine({
+  trustProxyHeaders: true,
+  allowedHosts: ['receipt.pxxl.click', 'localhost', '*'],
+});
 
 /**
  * Example Express Rest API endpoints can be defined here.
