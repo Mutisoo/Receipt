@@ -12,9 +12,9 @@ import { ReceiptService } from './services/receipt.service';
       <div class="control-bar no-print">
         <div class="brand">Receipt</div>
         <div class="mode-toggles">
-          <button [class.active]="viewMode() === 'edit'" (click)="viewMode.set('edit')">✏️ Edit Mode</button>
-          <button [class.active]="viewMode() === 'preview'" (click)="viewMode.set('preview')">👁️ Print Preview</button>
-          <button class="primary-btn" *ngIf="viewMode() === 'preview'" (click)="print()">🖨️ Print A5</button>
+          <button [class.active]="viewMode() === 'edit'" (click)="viewMode.set('edit')"> Edit Mode</button>
+          <button [class.active]="viewMode() === 'preview'" (click)="viewMode.set('preview')">Print Preview</button>
+          <button class="primary-btn" *ngIf="viewMode() === 'preview'" (click)="print()">Print A5</button>
         </div>
       </div>
 
@@ -32,13 +32,13 @@ import { ReceiptService } from './services/receipt.service';
         </div>
 
         <div class="meta-section">
-          <div class="customer-row">
-            <div class="customer-field">
-              <span class="label">Client:</span>
+          <div class="customer-row-wrapper">
+            <div class="customer-field-col">
+              <span class="subdued-label">Client </span>
               <input type="text" class="clean-input underline-input" [ngModel]="state().customerName" (ngModelChange)="updateState({customerName: $event})" placeholder="Customer Name" aria-label="Customer Name">
             </div>
-            <div class="date-field">
-              <span class="label">Date:</span>
+            <div class="date-field-col">
+              <span class="subdued-label">Date </span>
               <input type="date" class="clean-input underline-input date-input" [ngModel]="state().date" (ngModelChange)="updateState({date: $event})" aria-label="Receipt Date">
             </div> 
           </div>
@@ -89,7 +89,7 @@ import { ReceiptService } from './services/receipt.service';
                 rows="2" 
                 [value]="item.details" 
                 (input)="updateItemField(item.id, 'details', $event); autoResize($event)" 
-                placeholder="Item description...">
+                placeholder="...">
                 </textarea>
             </div>
             <div class="qty-cell">
@@ -107,7 +107,7 @@ import { ReceiptService } from './services/receipt.service';
                 (input)="!item.isAutoCalculated && updateItemField(item.id, 'manualAmount', $event)" 
                 placeholder="0.00" 
                 [title]="item.isAutoCalculated ? 'Auto-calculated' : 'Manual entry'">
-                <span class="lock-icon" *ngIf="item.isAutoCalculated" title="Auto-calculated">🔒</span>
+                <span class="lock-icon" *ngIf="item.isAutoCalculated" title="Auto-calculated"></span>
                 
                 <button class="remove-btn edit-chrome" *ngIf="!item._confirmDelete" (click)="srv.requestRemoveItem(item.id)" aria-label="Remove Row">×</button>
                 <div class="delete-toast edit-chrome" *ngIf="item._confirmDelete">
@@ -131,13 +131,13 @@ import { ReceiptService } from './services/receipt.service';
                 <button [class.active]="state().discountType === 'fixed'" (click)="updateState({discountType: 'fixed'})">Fixed</button>
               </div>
             </div>
-            <div class="validation-error" *ngIf="state().discountValue && srv.discountAmount() >= srv.subtotal()">⚠️ Discount capped at Subtotal</div>
+            <div class="validation-error" *ngIf="state().discountValue && srv.discountAmount() >= srv.subtotal()"> Discount capped at Subtotal</div>
             
             <div class="control-row">
               <label>VAT Rate (%)</label>
               <input type="number" class="clean-input amount-font bounded-input" [ngModel]="state().vatRate" (ngModelChange)="updateState({vatRate: $event})" min="0" max="100">
             </div>
-            <div class="validation-error" *ngIf="state().vatRate < 0 || state().vatRate > 100">⚠️ VAT rate must be 0-100%</div>
+            <div class="validation-error" *ngIf="state().vatRate < 0 || state().vatRate > 100"> VAT rate must be 0-100%</div>
           </div>
 
           <div class="totals-block amount-font">
@@ -193,9 +193,9 @@ import { ReceiptService } from './services/receipt.service';
     .title-block { 
       background: var(--emerald); 
       color: var(--white); 
-      font-weight: 600; 
-      font-size: 2.3rem;        /* Increased from 1.8rem */
-      padding: 8px 32px;        /* Expanded padding to match */
+      font-weight: 521px; 
+      font-size: 2.8rem;        /* Increased from 1.8rem */
+      padding: 8px 20px;        /* Expanded padding to match */
       letter-spacing: 1px; 
       margin:20px;
     }
@@ -208,32 +208,44 @@ import { ReceiptService } from './services/receipt.service';
     .logo-controls button { font-size: 0.75rem; padding: 4px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; }
     
     .meta-section { margin-bottom: 24px; }
-    .customer-row { 
+    .customer-row-wrapper { 
       display: flex; 
       justify-content: space-between; 
-      align-items: baseline; 
       gap: 16px; 
       margin-bottom: 16px; 
-      font-weight: 600; 
+      padding: 12px 14px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
     }
-    .customer-field { 
+    .customer-field-col { 
       display: flex; 
-      align-items: baseline; 
-      gap: 8px; 
+      flex-direction: column; 
+      gap: 4px; 
       flex: 2; 
     }
-    .date-field { 
+    .date-field-col { 
       display: flex; 
-      align-items: baseline; 
-      gap: 8px; 
+      flex-direction: column; 
+      gap: 4px; 
       flex: 1; 
-      justify-content: flex-end; 
+    }
+    .subdued-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .underline-input { 
+      border-bottom: 1px solid var(--charcoal) !important; 
+      padding-bottom: 2px; 
+      width: 100%; 
+      font-weight: 600;
     }
     .date-input { 
-      width: auto !important; 
       font-family: inherit; 
     }
-    .underline-input { border-bottom: 1px solid var(--charcoal) !important; padding-bottom: 2px; flex: 1; }
     .accessibility-groups { display: flex; flex-wrap: wrap; gap: 12px; }
     .a11y-group { display: flex; gap: 8px; background: #f9fafb; padding: 8px; border-radius: 6px; }
     .a11y-toggle { display: flex; align-items: center; gap: 6px; background: white; border: 2px solid #e5e7eb; padding: 0 12px; min-height: 44px; border-radius: 4px; cursor: pointer; font-family: var(--font-primary); font-weight: 500; font-size: 0.85rem; color: #666; transition: all 0.2s; }

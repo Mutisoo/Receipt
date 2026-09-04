@@ -1,6 +1,7 @@
 /* 1. Import Required Fonts */
 /* Rubik for general text, JetBrains Mono for clear, readable numbers */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Rubik:wght@400;500;600;800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
 
 :root {
   /* 2. Brand Colors */
