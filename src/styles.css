@@ -1,3 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+/* 1. Import Required Fonts */
+/* Rubik for general text, JetBrains Mono for clear, readable numbers */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Rubik:wght@400;500;600;800&display=swap');
 
-@import 'tailwindcss';
+:root {
+  /* 2. Brand Colors */
+  --white: #FFFFFF;
+  --charcoal: #1A1A1A;
+  --emerald: #0F9D58;
+  
+  /* 3. Typography Variables */
+  --font-primary: 'Rubik', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* 4. Base Page Setup */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  color: var(--charcoal);
+  /* A light grey background for the web view, so the white A5 receipt pops */
+  background-color: #e5e7eb; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 5. Utility Classes */
+.amount-font {
+  font-family: var(--font-mono);
+  letter-spacing: -0.5px; /* Keeps numbers tight and neat */
+}
+
+/* Base styles for the invisible inputs used throughout the receipt */
+.clean-input {
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Add a subtle highlight when actively typing in an input */
+.clean-input:not([readonly]):focus-visible {
+  background-color: rgba(15, 157, 88, 0.05); /* Very faint emerald tint */
+  border-radius: 2px;
+}
+
+/* 6. Global Print Overrides */
+@media print {
+  body {
+    background-color: var(--white);
+  }
+  
+  /* Hide standard browser scrollbars to prevent them from breaking the print layout */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
