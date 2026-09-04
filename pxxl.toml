@@ -1,4 +1,6 @@
 [build]
 command = "npm run build"
-outputDirectory = "dist/lumo-receipts/browser"
-installCommand = "npm install"
+installCommand = "npm ci"
+
+[run]
+command = "node dist/LumoReceipts/server/server.mjs"
